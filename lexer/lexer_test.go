@@ -34,5 +34,4 @@ func TestNextToken(t *testing.T) {
 			t.Fatalf("tests[%d] - literal: expected %q, got %q", i, tt.expectedLiteral, tok.Literal)
 		}
 	}
-
 }
