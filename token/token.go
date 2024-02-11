@@ -1,10 +1,16 @@
 package token
 
+import "fmt"
+
 type Type string
 
 type Token struct {
 	Type    Type
 	Literal string
+}
+
+func (t Token) String() string {
+	return fmt.Sprintf("{type='%s', lit='%s'}", t.Type, t.Literal)
 }
 
 const (
@@ -13,7 +19,7 @@ const (
 
 	// Identifiers and literals
 	IDENT = "IDENT"
-	IND   = "INT"
+	INT   = "INT"
 
 	// Operators
 	ASSIGN = "="
@@ -34,3 +40,15 @@ const (
 	FUNCTION = "FUNCTION"
 	LET      = "LET"
 )
+
+var keywords = map[string]Type{
+	"fn":  FUNCTION,
+	"let": LET,
+}
+
+func LookupIdent(ident string) Type {
+	if t, ok := keywords[ident]; ok {
+		return t
+	}
+	return IDENT
+}
