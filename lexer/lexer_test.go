@@ -6,7 +6,7 @@ import (
 )
 
 func TestNextToken(t *testing.T) {
-	input := `=+(){},;`
+	input := `=+-(){},;*/!<>`
 
 	tests := []struct {
 		expectedType    token.Type
@@ -14,12 +14,18 @@ func TestNextToken(t *testing.T) {
 	}{
 		{token.ASSIGN, "="},
 		{token.PLUS, "+"},
+		{token.MINUS, "-"},
 		{token.LPAREN, "("},
 		{token.RPAREN, ")"},
 		{token.LBRACE, "{"},
 		{token.RBRACE, "}"},
 		{token.COMMA, ","},
 		{token.SEMICOLON, ";"},
+		{token.MULTIPLY, "*"},
+		{token.DIVIDE, "/"},
+		{token.NOT, "!"},
+		{token.LESS_THAN, "<"},
+		{token.GREATER_THAN, ">"},
 		{token.EOF, ""},
 	}
 

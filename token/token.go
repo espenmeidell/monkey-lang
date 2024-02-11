@@ -22,8 +22,14 @@ const (
 	INT   = "INT"
 
 	// Operators
-	ASSIGN = "="
-	PLUS   = "+"
+	ASSIGN       = "="
+	PLUS         = "+"
+	MINUS        = "-"
+	MULTIPLY     = "*"
+	DIVIDE       = "/"
+	NOT          = "!"
+	LESS_THAN    = "<"
+	GREATER_THAN = ">"
 
 	// Delimiters
 	COMMA     = ","

@@ -71,6 +71,36 @@ func (l *Lexer) NextToken() *token.Token {
 			Type:    token.PLUS,
 			Literal: token.PLUS,
 		}
+	case '-':
+		t = &token.Token{
+			Type:    token.MINUS,
+			Literal: token.MINUS,
+		}
+	case '*':
+		t = &token.Token{
+			Type:    token.MULTIPLY,
+			Literal: token.MULTIPLY,
+		}
+	case '/':
+		t = &token.Token{
+			Type:    token.DIVIDE,
+			Literal: token.DIVIDE,
+		}
+	case '!':
+		t = &token.Token{
+			Type:    token.NOT,
+			Literal: token.NOT,
+		}
+	case '<':
+		t = &token.Token{
+			Type:    token.LESS_THAN,
+			Literal: token.LESS_THAN,
+		}
+	case '>':
+		t = &token.Token{
+			Type:    token.GREATER_THAN,
+			Literal: token.GREATER_THAN,
+		}
 	case '(':
 		t = &token.Token{
 			Type:    token.LPAREN,
