@@ -30,6 +30,8 @@ const (
 	NOT          = "!"
 	LESS_THAN    = "<"
 	GREATER_THAN = ">"
+	EQUALS       = "=="
+	NOT_EQUALS   = "!="
 
 	// Delimiters
 	COMMA     = ","

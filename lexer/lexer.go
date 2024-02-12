@@ -5,10 +5,10 @@ import (
 )
 
 type Lexer struct {
-	input           string
-	currentPosition int // The current character
-	readPosition    int // The next character to examine
-	char            byte
+	input           string // The source code to process
+	currentPosition int    // The current character
+	readPosition    int    // The next character to examine
+	char            byte   // The current character we are working on
 }
 
 func NewLexer(s string) *Lexer {
@@ -30,6 +30,15 @@ func (l *Lexer) readChar() {
 	}
 	l.currentPosition = l.readPosition
 	l.readPosition++
+}
+
+// peekChar will look at the next character without incrementing current char
+func (l *Lexer) peekChar() byte {
+	if l.readPosition >= len(l.input) {
+		return 0
+	} else {
+		return l.input[l.readPosition]
+	}
 }
 
 // readWord will call readChar as long as the current character is a letter
@@ -68,9 +77,18 @@ func (l *Lexer) NextToken() *token.Token {
 	var t *token.Token
 	switch l.char {
 	case '=':
-		t = &token.Token{
-			Type:    token.ASSIGN,
-			Literal: token.ASSIGN,
+		switch l.peekChar() {
+		case '=':
+			t = &token.Token{
+				Type:    token.EQUALS,
+				Literal: token.EQUALS,
+			}
+			l.readChar()
+		default:
+			t = &token.Token{
+				Type:    token.ASSIGN,
+				Literal: token.ASSIGN,
+			}
 		}
 	case '+':
 		t = &token.Token{
@@ -93,9 +111,18 @@ func (l *Lexer) NextToken() *token.Token {
 			Literal: token.DIVIDE,
 		}
 	case '!':
-		t = &token.Token{
-			Type:    token.NOT,
-			Literal: token.NOT,
+		switch l.peekChar() {
+		case '=':
+			t = &token.Token{
+				Type:    token.NOT_EQUALS,
+				Literal: token.NOT_EQUALS,
+			}
+			l.readChar()
+		default:
+			t = &token.Token{
+				Type:    token.NOT,
+				Literal: token.NOT,
+			}
 		}
 	case '<':
 		t = &token.Token{
