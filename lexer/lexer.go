@@ -6,8 +6,8 @@ import (
 
 type Lexer struct {
 	input           string
-	currentPosition int
-	readPosition    int
+	currentPosition int // The current character
+	readPosition    int // The next character to examine
 	char            byte
 }
 
@@ -19,6 +19,9 @@ func NewLexer(s string) *Lexer {
 	return l
 }
 
+// readChar updates the current char of the lexer and
+// increments the currentPosition and readPosition. When end
+// is reached the value of char is 0
 func (l *Lexer) readChar() {
 	if l.readPosition >= len(l.input) {
 		l.char = 0
@@ -29,6 +32,7 @@ func (l *Lexer) readChar() {
 	l.readPosition++
 }
 
+// readWord will call readChar as long as the current character is a letter
 func (l *Lexer) readWord() string {
 	var bytes []byte
 	for isLetter(l.char) {
@@ -38,6 +42,7 @@ func (l *Lexer) readWord() string {
 	return string(bytes)
 }
 
+// readNumber will call readChar as long as the current character is a digit
 func (l *Lexer) readNumber() string {
 	var bytes []byte
 	for isDigit(l.char) {
@@ -47,6 +52,7 @@ func (l *Lexer) readNumber() string {
 	return string(bytes)
 }
 
+// skipWhitespace will call readChar as long as the current char is whitespace
 func (l *Lexer) skipWhitespace() {
 	for l.char == ' ' || l.char == '\t' || l.char == '\r' || l.char == '\n' {
 		l.readChar()
@@ -143,14 +149,14 @@ func (l *Lexer) NextToken() *token.Token {
 				Type:    token.LookupIdent(word),
 				Literal: word,
 			}
-			return t
+			return t // readWord has incremented char position, return early
 		} else if isDigit(l.char) {
 			number := l.readNumber()
 			t = &token.Token{
 				Type:    token.INT,
 				Literal: number,
 			}
-			return t
+			return t // readNumber has incremented char position, return early
 		} else {
 			t = &token.Token{
 				Type:    token.ILLEGAL,
