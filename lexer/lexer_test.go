@@ -49,6 +49,8 @@ let add = fn(x, y) {
 	x + y;
 };
 let result = add(five, ten);
+!-/5;
+5 < 10 > 5;
 `
 
 	tests := []struct {
@@ -94,6 +96,20 @@ let result = add(five, ten);
 		{token.IDENT, "ten"},
 		{token.RPAREN, ")"},
 		{token.SEMICOLON, ";"},
+		//
+		{token.NOT, "!"},
+		{token.MINUS, "-"},
+		{token.DIVIDE, "/"},
+		{token.INT, "5"},
+		{token.SEMICOLON, ";"},
+		//
+		{token.INT, "5"},
+		{token.LESS_THAN, "<"},
+		{token.INT, "10"},
+		{token.GREATER_THAN, ">"},
+		{token.INT, "5"},
+		{token.SEMICOLON, ";"},
+		//
 		{token.EOF, ""},
 	}
 
